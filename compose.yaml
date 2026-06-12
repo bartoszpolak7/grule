@@ -23,7 +23,7 @@ services:
       db:
         condition: service_healthy
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/grule
+      DATABASE_URL:  postgres://postgres:postgres@db:5432/grule
       JWT_SECRET: PLACEHOLDER
 
 
