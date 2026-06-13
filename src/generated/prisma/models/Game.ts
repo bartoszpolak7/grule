@@ -248,17 +248,17 @@ export type GameOrderByWithRelationInput = {
 
 export type GameWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  title?: string
   AND?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   OR?: Prisma.GameWhereInput[]
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
-  title?: Prisma.StringFilter<"Game"> | string
   description?: Prisma.StringFilter<"Game"> | string
   price?: Prisma.FloatFilter<"Game"> | number
   genre?: Prisma.StringFilter<"Game"> | string
   imageUrl?: Prisma.StringNullableFilter<"Game"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   orderItems?: Prisma.OrderItemListRelationFilter
-}, "id">
+}, "id" | "title">
 
 export type GameOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

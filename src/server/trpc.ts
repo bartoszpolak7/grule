@@ -1,8 +1,9 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/auth";
+import superjson from "superjson";
 
-// tutaj tworzony jest kontekst TRPC
+// inizjalizacja systemu TRPC, zarządzanie metadanymi
 
 export const createTRPCContext = async () => {
   return {
@@ -10,7 +11,9 @@ export const createTRPCContext = async () => {
   };
 };
 
-const t = initTRPC.context<typeof createTRPCContext>().create();
+const t = initTRPC.context<typeof createTRPCContext>().create({
+  transformer: superjson,
+});
 
 export const router = t.router;
 
