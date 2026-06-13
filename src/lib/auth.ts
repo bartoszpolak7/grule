@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 
+// funkcje do korzystani z webtokenów
+
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 // czasy wygasania dla odpowiednich tokenów

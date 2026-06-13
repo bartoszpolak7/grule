@@ -13,4 +13,5 @@ RUN npm run build
 EXPOSE 3000
 
 # dla produkcji zmienić na > npm start
-CMD ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
+# CMD ["sh", "-c", "npx prisma migrate deploy && npm run dev"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npx tsx prisma/seed.ts && npm run dev"]

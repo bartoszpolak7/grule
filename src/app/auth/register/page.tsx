@@ -17,7 +17,7 @@ export default function RegisterPage() {
       setAuth(data.accessToken, data.email)
 
       // router w Next.js korzysta z push() do nawigacji
-      router.push('/games')
+      router.push('/shop/games')
     },
     onError: (err) => {
       setError(err.message)
@@ -57,7 +57,7 @@ export default function RegisterPage() {
           {register.isPending ? 'Creating account...' : 'Register'}
         </button>
       </form>
-      <p>Already have an account? <Link href="/login">Login</Link></p>
+      <p>Already have an account? <Link href="/auth/login">Login</Link></p>
     </main>
   )
 }

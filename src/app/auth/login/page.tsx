@@ -15,7 +15,7 @@ export default function LoginPage() {
   const login = trpc.auth.login.useMutation({
     onSuccess: (data) => {
       setAuth(data.accessToken, data.email)
-      router.push('/games')
+      router.push('/shop/games')
     },
     onError: (err) => {
       setError(err.message)
@@ -55,7 +55,7 @@ export default function LoginPage() {
           {login.isPending ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      <p>No account? <Link href="/register">Register</Link></p>
+      <p>No account? <Link href="/auth//register">Register</Link></p>
     </main>
   )
 }
