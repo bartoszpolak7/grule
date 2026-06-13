@@ -8,16 +8,16 @@ export default function ProtectedPage({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { accessToken, isLoading } = useAuth();
+  const { isLoggedIn, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (isLoading) return;
-    if (!accessToken) router.push("/auth/login");
-  }, [accessToken, isLoading, router]);
+    if (!isLoggedIn) router.push("/auth/login");
+  }, [isLoggedIn, isLoading, router]);
 
   if (isLoading) return <Spinner />;
-  if (!accessToken) return null;
+  if (!isLoggedIn) return null;
 
   return <>{children}</>;
 }

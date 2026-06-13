@@ -7,14 +7,14 @@ import { useAuth } from "@/context/auth";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { setAuth } = useAuth();
+  const { setLoggedIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const login = trpc.auth.login.useMutation({
     onSuccess: (data) => {
-      setAuth(data.accessToken, data.email);
+      setLoggedIn(data.email);
       router.push("/shop/games");
     },
     onError: (err) => {

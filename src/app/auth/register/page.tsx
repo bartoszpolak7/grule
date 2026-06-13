@@ -7,14 +7,14 @@ import { useAuth } from "@/context/auth";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { setAuth } = useAuth();
+  const { setLoggedIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const register = trpc.auth.register.useMutation({
     onSuccess: (data) => {
-      setAuth(data.accessToken, data.email);
+      setLoggedIn(data.email);
 
       // router w Next.js korzysta z push() do nawigacji
       router.push("/shop/games");

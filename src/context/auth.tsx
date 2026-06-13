@@ -3,11 +3,11 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { trpc } from "@/trpc/client";
 
 type AuthContext = {
-  accessToken: string | null;
-  email: string | null;
+  isLoggedIn: boolean;
   isLoading: boolean;
-  setAuth: (token: string, email: string) => void;
-  clearAuth: () => void;
+  email: string | null;
+  setLoggedIn: (email: string) => void;
+  setLoggedOut: () => void;
 };
 
 const AuthContext = createContext<AuthContext | null>(null);
@@ -15,40 +15,28 @@ const AuthContext = createContext<AuthContext | null>(null);
 export function AuthProvider({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // droga mutacji: klient trpc -> auth router -> procedura refresh
   const refresh = trpc.auth.refresh.useMutation();
 
-  const setAuth = (token: string, email: string) => {
-    setAccessToken(token);
+  const setLoggedIn = (email: string) => {
+    setIsLoggedIn(true);
     setEmail(email);
   };
 
-  // REACT COMPILER OGARNIE, W RAZIE CZEGO WYMIENIĆ
-
-  // const setAuth = useCallback((token: string, email: string) => {
-  //   setAccessToken(token)
-  //   setEmail(email)
-  // }, [])
-
-  const clearAuth = () => {
-    setAccessToken(null);
+  const setLoggedOut = () => {
+    setIsLoggedIn(false);
     setEmail(null);
   };
-
-  // const clearAuth = useCallback(() => {
-  //   setAccessToken(null)
-  //   setEmail(null)
-  // }, [])
 
   // On mount - spróbuj wykorzystać refresh token do wznowienia sesji
   useEffect(() => {
     refresh.mutate(undefined, {
-      onSuccess: (data) => {
-        setAccessToken(data.accessToken);
+      onSuccess: () => {
+        setIsLoggedIn(true);
       },
       onSettled: () => {
         setIsLoading(false);
@@ -59,9 +47,8 @@ export function AuthProvider({
   }, []);
 
   return (
-    // COMPILER OGARNIE MEMO
     <AuthContext.Provider
-      value={{ accessToken, email, isLoading, setAuth, clearAuth }}
+      value={{ isLoggedIn, isLoading, email, setLoggedIn, setLoggedOut }}
     >
       {children}
     </AuthContext.Provider>

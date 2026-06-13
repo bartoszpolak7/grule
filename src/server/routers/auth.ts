@@ -10,6 +10,38 @@ import {
   signRefreshToken,
   verifyToken,
 } from "@/lib/auth";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+
+const REFRESH_EXPIRY = 7 * 24 * 60 * 60 * 1000;
+const REFRESH_MAX_AGE = 7 * 24 * 60 * 60;
+const ACCESS_MAX_AGE = 15 * 60;
+
+const setRefreshCookie = (
+  refreshToken: string,
+  cookieStore: ReadonlyRequestCookies,
+) => {
+  cookieStore.set("refresh_token", refreshToken, {
+    // to pole tutaj chroni przed Javascriptem, który chciałby ciastko
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: REFRESH_MAX_AGE,
+    path: "/",
+  });
+};
+
+const setAccessCookie = (
+  accessToken: string,
+  cookieStore: ReadonlyRequestCookies,
+) => {
+  cookieStore.set("access_token", accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: ACCESS_MAX_AGE,
+    path: "/",
+  });
+};
 
 export const authRouter = router({
   // rejestracja
@@ -35,25 +67,22 @@ export const authRouter = router({
         data: { email: input.email, password: hashed },
       });
 
+      const cookieStore = await cookies();
       const accessToken = signAccessToken(user.id);
+
+      setAccessCookie(accessToken, cookieStore);
+
       const refreshToken = signRefreshToken(user.id);
 
       await prisma.refreshToken.create({
         data: {
           token: refreshToken,
           userId: user.id,
-          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          expiresAt: new Date(Date.now() + REFRESH_EXPIRY),
         },
       });
 
-      const cookieStore = await cookies();
-      cookieStore.set("refresh_token", refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 7 * 24 * 60 * 60,
-        path: "/",
-      });
+      setRefreshCookie(refreshToken, cookieStore);
 
       return { accessToken, email: user.email };
     }),
@@ -83,25 +112,22 @@ export const authRouter = router({
           message: "Invalid credentials",
         });
 
+      const cookieStore = await cookies();
       const accessToken = signAccessToken(user.id);
+
+      setAccessCookie(accessToken, cookieStore);
+
       const refreshToken = signRefreshToken(user.id);
 
       await prisma.refreshToken.create({
         data: {
           token: refreshToken,
           userId: user.id,
-          expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+          expiresAt: new Date(Date.now() + REFRESH_EXPIRY),
         },
       });
 
-      const cookieStore = await cookies();
-      cookieStore.set("refresh_token", refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 7 * 24 * 60 * 60,
-        path: "/",
-      });
+      setRefreshCookie(refreshToken, cookieStore);
 
       return { accessToken, email: user.email };
     }),
@@ -123,7 +149,9 @@ export const authRouter = router({
     }
 
     const accessToken = signAccessToken(payload.userId);
-    return { accessToken };
+    setAccessCookie(accessToken, cookieStore);
+
+    return { success: true };
   }),
 
   // wylogowywanie
