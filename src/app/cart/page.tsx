@@ -3,10 +3,18 @@ import { useCart } from "@/context/cart";
 import { useAuth } from "@/context/auth";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import ProtectedPage from "@/components/ProtectedPage";
 
 export default function CartPage() {
+  return (
+    <ProtectedPage>
+      <CartContent />
+    </ProtectedPage>
+  );
+}
+
+function CartContent() {
   const { items, removeItem, total } = useCart();
-  const { accessToken } = useAuth();
   const router = useRouter();
 
   if (items.length === 0) {
@@ -20,10 +28,6 @@ export default function CartPage() {
   }
 
   const handleCheckout = () => {
-    if (!accessToken) {
-      router.push("/auth/login");
-      return;
-    }
     router.push("/checkout");
   };
 

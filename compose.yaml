@@ -24,7 +24,7 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL:  postgres://postgres:postgres@db:5432/grule
-      JWT_SECRET: PLACEHOLDER
+      JWT_SECRET: cbtwWWtbXXwilGVZMkeHNEFupCCyhNwj1B4mLuabUNx
     volumes:
       - .:/app
 
