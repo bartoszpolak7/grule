@@ -2,13 +2,15 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/lib/auth";
 
-export const createTRPCCOntext = async () => {
+// tutaj tworzony jest kontekst TRPC
+
+export const createTRPCContext = async () => {
   return {
     cookies: await cookies(),
   };
 };
 
-const t = initTRPC.context<typeof createTRPCCOntext>().create();
+const t = initTRPC.context<typeof createTRPCContext>().create();
 
 export const router = t.router;
 
