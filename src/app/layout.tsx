@@ -14,7 +14,6 @@ export default function RootLayout({
             <CartProvider>
               <Navbar />
               <div style={{ paddingTop: "3.5rem" }}>{children}</div>
-              {children}
             </CartProvider>
           </AuthProvider>
         </TRPCProvider>
