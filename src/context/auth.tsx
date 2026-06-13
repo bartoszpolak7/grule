@@ -20,15 +20,27 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
   // droga mutacji: klient trpc -> auth router -> procedura refresh
   const refresh = trpc.auth.refresh.useMutation()
 
-  const setAuth = useCallback((token: string, email: string) => {
+  const setAuth = (token: string, email: string) => {
     setAccessToken(token)
-    setEmail(email)
-  }, [])
+    setEmail(email) 
+  }
 
-  const clearAuth = useCallback(() => {
+  // REACT COMPILER OGARNIE, W RAZIE CZEGO WYMIENIĆ
+
+  // const setAuth = useCallback((token: string, email: string) => {
+  //   setAccessToken(token)
+  //   setEmail(email)
+  // }, [])
+
+  const clearAuth = () => {
     setAccessToken(null)
     setEmail(null)
-  }, [])
+  }
+
+  // const clearAuth = useCallback(() => {
+  //   setAccessToken(null)
+  //   setEmail(null)
+  // }, [])
 
   // On mount - spróbuj wykorzystać refresh token do wznowienia sesji
   useEffect(() => {
@@ -45,7 +57,7 @@ export function AuthProvider({ children }: Readonly<{ children: React.ReactNode 
   }, [])
 
   return (
-    // można zignorować SonarQube, React Compiler się zajmie memoizacją (chyba)
+    // COMPILER OGARNIE MEMO
     <AuthContext.Provider value={{ accessToken, email, isLoading, setAuth, clearAuth }}>
       {children}
     </AuthContext.Provider>
