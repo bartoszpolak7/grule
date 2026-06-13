@@ -1,6 +1,7 @@
 import { AuthProvider } from "@/context/auth";
 import { TRPCProvider } from "@/trpc/provider";
 import { CartProvider } from "@/context/cart";
+import Navbar from "@/components/Navbar";
 
 export default function RootLayout({
   children,
@@ -10,7 +11,11 @@ export default function RootLayout({
       <body>
         <TRPCProvider>
           <AuthProvider>
-            <CartProvider>{children}</CartProvider>
+            <CartProvider>
+              <Navbar />
+              <div style={{ paddingTop: "3.5rem" }}>{children}</div>
+              {children}
+            </CartProvider>
           </AuthProvider>
         </TRPCProvider>
       </body>

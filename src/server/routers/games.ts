@@ -21,4 +21,11 @@ export const gamesRouter = router({
       if (!game) throw new Error("Game not found");
       return game;
     }),
+
+  bestDeals: publicProcedure.query(async () => {
+    return prisma.game.findMany({
+      orderBy: { price: "asc" },
+      take: 4,
+    });
+  }),
 });
