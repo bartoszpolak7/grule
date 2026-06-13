@@ -55,7 +55,7 @@ export default function LoginPage() {
           {login.isPending ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      <p>No account? <Link href="/auth//register">Register</Link></p>
+      <p>No account? <Link href="/auth/register">Register</Link></p>
     </main>
   )
 }
