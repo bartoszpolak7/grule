@@ -1,36 +1,38 @@
-'use client'
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { trpc } from '@/trpc/client'
-import { useAuth } from '@/context/auth'
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { trpc } from "@/trpc/client";
+import { useAuth } from "@/context/auth";
 
 export default function LoginPage() {
-  const router = useRouter()
-  const { setAuth } = useAuth()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const router = useRouter();
+  const { setAuth } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const login = trpc.auth.login.useMutation({
     onSuccess: (data) => {
-      setAuth(data.accessToken, data.email)
-      router.push('/shop/games')
+      setAuth(data.accessToken, data.email);
+      router.push("/shop/games");
     },
     onError: (err) => {
-      setError(err.message)
+      setError(err.message);
     },
-  })
+  });
 
   return (
     <main>
       <h1>Login</h1>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <form onSubmit={(e) => {
-        e.preventDefault()
-        setError(null)
-        login.mutate({ email, password })
-      }}>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setError(null);
+          login.mutate({ email, password });
+        }}
+      >
         <div>
           <label htmlFor="email">Email</label>
           <input
@@ -52,10 +54,12 @@ export default function LoginPage() {
           />
         </div>
         <button type="submit" disabled={login.isPending}>
-          {login.isPending ? 'Logging in...' : 'Login'}
+          {login.isPending ? "Logging in..." : "Login"}
         </button>
       </form>
-      <p>No account? <Link href="/auth/register">Register</Link></p>
+      <p>
+        No account? <Link href="/auth/register">Register</Link>
+      </p>
     </main>
-  )
+  );
 }
