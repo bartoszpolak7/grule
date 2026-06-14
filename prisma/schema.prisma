@@ -28,7 +28,7 @@ model Game {
   title           String      @unique
   description     String?
   price           Float
-  genre           String
+  genres           String[]
   imageUrl        String?
   minRamGb        Int?
   minStorageGb    Int?

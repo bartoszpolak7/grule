@@ -4,34 +4,52 @@ import { prisma } from "../src/lib/prisma";
 
 const games = [
   {
-    title: "Potato Quest",
-    description: "An epic adventure for low-end PCs.",
+    rawgId: 422,
+    title: "Terraria",
+    price: 9.99,
+    genres: ["Action", "Adventure"],
+  },
+  {
+    rawgId: 3328,
+    title: "The Witcher 3",
+    price: 39.99,
+    genres: ["RPG", "Action"],
+  },
+  {
+    rawgId: 4200,
+    title: "Portal 2",
+    price: 9.99,
+    genres: ["Puzzle", "Action"],
+  },
+  {
+    rawgId: 713,
+    title: "Stardew Valley",
+    price: 14.99,
+    genres: ["RPG", "Simulation"],
+  },
+  {
+    rawgId: 12020,
+    title: "Left 4 Dead 2",
+    price: 9.99,
+    genres: ["Action", "Shooter"],
+  },
+  {
+    rawgId: 328487,
+    title: "Celeste",
+    price: 19.99,
+    genres: ["Platformer", "Indie"],
+  },
+  {
+    rawgId: 27370,
+    title: "Hollow Knight",
+    price: 14.99,
+    genres: ["Action", "Indie"],
+  },
+  {
+    rawgId: 416078,
+    title: "Among Us",
     price: 4.99,
-    genre: "RPG",
-  },
-  {
-    title: "Minesweeper Deluxe",
-    description: "The classic, reimagined.",
-    price: 1.99,
-    genre: "Puzzle",
-  },
-  {
-    title: "Budget Racer",
-    description: "Race on integrated graphics.",
-    price: 2.99,
-    genre: "Racing",
-  },
-  {
-    title: "Pixel Dungeon",
-    description: "Roguelike for the frugal gamer.",
-    price: 3.99,
-    genre: "Roguelike",
-  },
-  {
-    title: "Farm Simulator Lite",
-    description: "Grow crops on 512MB RAM.",
-    price: 0.99,
-    genre: "Simulation",
+    genres: ["Strategy", "Indie"],
   },
 ];
 

@@ -8,9 +8,8 @@ import { getRawgGame } from "@/lib/rawg";
 export const gamesRouter = router({
   list: publicProcedure
     .input(z.object({ genre: z.string().optional() }).optional())
-    .query(async ({ input }) => {
+    .query(async () => {
       return prisma.game.findMany({
-        where: input?.genre ? { genre: input.genre } : undefined,
         orderBy: { createdAt: "desc" },
       });
     }),
@@ -35,14 +34,14 @@ export const gamesRouter = router({
             requiresGpu: rawg.specs.requiresGpu,
             minOs: rawg.specs.minOs,
             imageUrl: rawg.imageUrl ?? game.imageUrl,
-            genre: rawg.genre ?? game.genre,
+            genres: rawg.genres.length > 0 ? rawg.genres : game.genres,
           },
         });
       }
 
       return {
         ...game,
-        genre: rawg.genre ?? game.genre,
+        genres: rawg.genres.length > 0 ? rawg.genres : game.genres,
         imageUrl: rawg.imageUrl ?? game.imageUrl,
         rawgRating: rawg.rating,
         rawgDescription: rawg.description,

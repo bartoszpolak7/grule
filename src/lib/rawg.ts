@@ -25,7 +25,7 @@ export type RawgEnrichedData = {
   metacritic: number | null;
   screenshots: string[];
   specs: ParsedSpecs;
-  genre: string | null;
+  genres: string[];
 };
 
 export async function getRawgGame(
@@ -49,7 +49,7 @@ export async function getRawgGame(
       metacritic: data.metacritic,
       screenshots: data.short_screenshots?.map((s) => s.image) ?? [],
       specs,
-      genre: data.genres?.[0]?.name ?? null,
+      genres: data.genres?.map((g) => g.name) ?? [],
     };
   } catch {
     return null;
