@@ -22,7 +22,7 @@ const games = [
     genres: ["Puzzle", "Action"],
   },
   {
-    rawgId: 713,
+    rawgId: 654,
     title: "Stardew Valley",
     price: 14.99,
     genres: ["RPG", "Simulation"],
@@ -40,13 +40,13 @@ const games = [
     genres: ["Platformer", "Indie"],
   },
   {
-    rawgId: 27370,
+    rawgId: 9767,
     title: "Hollow Knight",
     price: 14.99,
     genres: ["Action", "Indie"],
   },
   {
-    rawgId: 416078,
+    rawgId: 356714,
     title: "Among Us",
     price: 4.99,
     genres: ["Strategy", "Indie"],
