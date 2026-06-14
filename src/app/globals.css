@@ -1,0 +1,42 @@
+@import "tailwindcss";
+@import "nes.css/css/nes.min.css";
+
+:root {
+  color-scheme: dark;
+  background-color: #222;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: url("/background3.png") top left / auto repeat;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: multiply;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #fff;
+  color: #000;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
