@@ -27,7 +27,7 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
           <p className="title text-xs">SZCZEGÓŁY GRY</p>
           <div className="mb-4">
             <h1 className="text-xl font-bold mb-2">{game.title}</h1>
-            <p className="text-xs mb-4">{game.genre}</p>
+            <p className="text-xs mb-4">{game.genres.join(", ")}</p>
 
             {game.rawgRating && (
               <p className="text-xs mb-2">

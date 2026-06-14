@@ -15,6 +15,7 @@ export default function GamesListClient({ games }: Readonly<Props>) {
   const { filters, setFilters, filtered, genres } = useGameFilters(games);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
@@ -37,13 +38,53 @@ export default function GamesListClient({ games }: Readonly<Props>) {
         genres={genres}
         showPriceFilter={true}
       />
-      {filtered.length === 0 && (
-        <p className="text-xs text-center mt-8">NIE MA TAKIEJ GRY.</p>
-      )}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filtered.map((game) => (
-          <GameCard key={game.id} game={game} mounted={mounted} />
-        ))}
+
+      <div className="grid gap-6 lg:grid-cols-[1fr_200px]">
+        {/* Games grid */}
+        <div>
+          {filtered.length === 0 && (
+            <p className="text-xs text-center mt-8">NIE MA TAKIEJ GRY.</p>
+          )}
+          <div className="grid gap-4 md:grid-cols-2">
+            {filtered.map((game) => (
+              <GameCard key={game.id} game={game} mounted={mounted} />
+            ))}
+          </div>
+        </div>
+
+        {/* Genre panel */}
+        <aside className="nes-container is-dark with-title h-fit">
+          <p className="title text-xs">GATUNKI</p>
+          <ul className="space-y-2 mt-2">
+            {genres.map((genre) => (
+              <li key={genre}>
+                <label className="flex items-center gap-2 text-xs cursor-pointer">
+                  <input
+                    type="checkbox"
+                    className="nes-checkbox"
+                    checked={filters.selectedGenres.has(genre)}
+                    onChange={() => {
+                      const next = new Set(filters.selectedGenres);
+                      next.has(genre) ? next.delete(genre) : next.add(genre);
+                      setFilters({ ...filters, selectedGenres: next });
+                    }}
+                  />
+                  <span>{genre}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+          {filters.selectedGenres.size > 0 && (
+            <button
+              className="nes-btn is-error text-xs w-full mt-4"
+              onClick={() =>
+                setFilters({ ...filters, selectedGenres: new Set() })
+              }
+            >
+              WYCZYŚĆ
+            </button>
+          )}
+        </aside>
       </div>
     </PageWrapper>
   );

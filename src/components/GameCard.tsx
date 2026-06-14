@@ -35,7 +35,7 @@ export default function GameCard({ game, mounted }: Readonly<Props>) {
         className="block hover:bg-yellow-100 p-3 transition"
       >
         <h3 className="text-xs font-bold mb-2 text-black">{game.title}</h3>
-        <p className="text-xs text-gray-700 mb-1">{game.genre}</p>
+        <p className="text-xs text-gray-700 mb-1">{game.genres.join(", ")}</p>
         <p className="text-xs font-bold text-green-700">
           ${game.price.toFixed(2)}
         </p>

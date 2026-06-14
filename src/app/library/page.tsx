@@ -99,7 +99,7 @@ function LibraryContent() {
   );
 }
 
-function GameDetail({ game }: { game: Game }) {
+function GameDetail({ game }: Readonly<{ game: Game }>) {
   return (
     <div className="space-y-4">
       {game.imageUrl && (
@@ -116,7 +116,7 @@ function GameDetail({ game }: { game: Game }) {
       )}
       <div>
         <h1 className="text-lg font-bold mb-1">{game.title}</h1>
-        <p className="text-xs mb-3">{game.genre}</p>
+        <p className="text-xs mb-3">{game.genres.join(", ")}</p>
         <p className="text-xs leading-5">{game.description}</p>
       </div>
     </div>

@@ -1,21 +1,18 @@
 "use client";
 
-import { SearchFilters } from "@/lib/useGameFilters";
-
-export type SortOption = "az" | "za" | "price-asc" | "price-desc";
-export type GenreOption = string | "all";
+import type { SearchFilters, SortOption } from "@/lib/useGameFilters";
 
 interface Props {
   filters: SearchFilters;
   onChange: (filters: SearchFilters) => void;
-  genres: string[]; // od rodzica, żeby działało biblioteka i sklep
-  showPriceFilter?: boolean; // tylko sklep pokazuje cenę
+  genres: string[];
+  showPriceFilter?: boolean;
 }
 
 export default function GameSearch({
   filters,
   onChange,
-  genres,
+  genres = [],
   showPriceFilter = true,
 }: Readonly<Props>) {
   const update = (partial: Partial<SearchFilters>) =>
@@ -25,10 +22,10 @@ export default function GameSearch({
     <div className="nes-container is-dark with-title mb-6">
       <p className="title text-xs">Wypatrz bulwę</p>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {/* TEKSTOWE - TYTUŁ */}
+      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
+        {/* Col 1: Wyszukiwanie */}
         <div className="nes-field">
-          <label htmlFor="search">Szukaj...</label>
+          <label htmlFor="search">SZUKAJ</label>
           <input
             id="search"
             type="text"
@@ -39,26 +36,7 @@ export default function GameSearch({
           />
         </div>
 
-        {/* GATUNEK */}
-        <div className="nes-field">
-          <label htmlFor="genre">GATUNEK</label>
-          <div className="nes-select is-dark">
-            <select
-              id="genre"
-              value={filters.genre}
-              onChange={(e) => update({ genre: e.target.value })}
-            >
-              <option value="all">WSZYSTKIE GATUNKI</option>
-              {genres.map((g) => (
-                <option key={g} value={g}>
-                  {g.toUpperCase()}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        {/* SORTOWANIE */}
+        {/* Col 2: Sortowanie */}
         <div className="nes-field">
           <label htmlFor="sort">SORTUJ</label>
           <div className="nes-select is-dark">
@@ -75,32 +53,37 @@ export default function GameSearch({
           </div>
         </div>
 
-        {/* Maksymalna cena - tylko sklep */}
-        {showPriceFilter && (
-          <div className="nes-field">
-            <label htmlFor="maxPrice">
-              MAKSYMALNA CENA{" "}
-              {filters.maxPrice === null ? "DOWOLNA" : `$${filters.maxPrice}`}
-            </label>
-            <input
-              id="maxPrice"
-              type="range"
-              min={0}
-              max={100}
-              step={1}
-              value={filters.maxPrice ?? 100}
-              onChange={(e) => {
-                const val = Number(e.target.value);
-                update({ maxPrice: val === 100 ? null : val });
-              }}
-              className="nes-progress"
-              style={{ width: "100%", marginTop: "0.5rem" }}
-            />
+        {/* Col 3: Cena — zajmuje miejsce nawet ukryta */}
+        <div
+          className="nes-field"
+          style={{ visibility: showPriceFilter ? "visible" : "hidden" }}
+        >
+          <label htmlFor="maxPrice">
+            CENA MAX:{" "}
+            {filters.maxPrice === null ? "DOWOLNA" : `$${filters.maxPrice}`}
+          </label>
+          <input
+            id="maxPrice"
+            type="range"
+            min={1}
+            max={101}
+            step={1}
+            value={filters.maxPrice ?? 101}
+            onChange={(e) => {
+              const val = Number(e.target.value);
+              update({ maxPrice: val === 101 ? null : val });
+            }}
+            style={{ width: "100%", marginTop: "0.5rem" }}
+          />
+          <div className="flex justify-between text-xs mt-1">
+            <span>$1</span>
+            <span>$50</span>
+            <span>DOWOLNA</span>
           </div>
-        )}
+        </div>
 
-        {/* POTATO ONLY */}
-        <div className="flex items-center gap-2 mt-2">
+        {/* Col 4: Potato */}
+        <div className="flex flex-col justify-center gap-3">
           <label className="flex items-center gap-2 text-xs cursor-pointer">
             <input
               type="checkbox"
@@ -108,21 +91,21 @@ export default function GameSearch({
               checked={filters.potatoOnly}
               onChange={(e) => update({ potatoOnly: e.target.checked })}
             />
-            <span>🥔 POTATO PC ONLY (brak dedykowanej karty graficznej)</span>
+            <span>🥔 POTATO ONLY</span>
           </label>
         </div>
 
-        {/* MAX RAM */}
+        {/* Row 2: RAM */}
         <div className="nes-field">
           <label htmlFor="maxRam">
-            MAKS. RAM:{" "}
+            RAM MAX:{" "}
             {filters.maxRamGb === null ? "DOWOLNY" : `${filters.maxRamGb}GB`}
           </label>
           <input
             id="maxRam"
             type="range"
             min={1}
-            max={33} // 33 = sentinel for "any"
+            max={33}
             step={1}
             value={filters.maxRamGb ?? 33}
             onChange={(e) => {
@@ -138,11 +121,12 @@ export default function GameSearch({
           </div>
         </div>
 
+        {/* Row 2: Dysk */}
         <div className="nes-field">
           <label htmlFor="maxStorage">
-            MAKS. DYSK:{" "}
+            DYSK MAX:{" "}
             {filters.maxStorageGb === null
-              ? "DOWOLNY"
+              ? "DOWOLNA"
               : `${filters.maxStorageGb}GB`}
           </label>
           <input
@@ -161,7 +145,7 @@ export default function GameSearch({
           <div className="flex justify-between text-xs mt-1">
             <span>1GB</span>
             <span>64GB</span>
-            <span>DOWOLNY</span>
+            <span>DOWOLNA</span>
           </div>
         </div>
       </div>

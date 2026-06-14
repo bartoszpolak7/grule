@@ -6,13 +6,11 @@ import { TRPCError } from "@trpc/server";
 import { getRawgGame } from "@/lib/rawg";
 
 export const gamesRouter = router({
-  list: publicProcedure
-    .input(z.object({ genre: z.string().optional() }).optional())
-    .query(async () => {
-      return prisma.game.findMany({
-        orderBy: { createdAt: "desc" },
-      });
-    }),
+  list: publicProcedure.query(async () => {
+    return prisma.game.findMany({
+      orderBy: { createdAt: "desc" },
+    });
+  }),
 
   byId: publicProcedure
     .input(z.object({ id: z.string() }))

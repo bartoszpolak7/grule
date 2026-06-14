@@ -8,28 +8,28 @@ export type SortOption = "az" | "za" | "price-asc" | "price-desc";
 export interface SearchFilters {
   query: string;
   sort: SortOption;
-  selectedGenres: string[];
   maxPrice: number | null;
   maxRamGb: number | null;
   maxStorageGb: number | null;
   potatoOnly: boolean;
+  selectedGenres: Set<string>;
 }
 
 export const defaultFilters: SearchFilters = {
   query: "",
   sort: "az",
-  selectedGenres: [],
   maxPrice: null,
   maxRamGb: null,
   maxStorageGb: null,
   potatoOnly: false,
+  selectedGenres: new Set(),
 };
 
 export function useGameFilters(games: Game[]) {
   const [filters, setFilters] = useState<SearchFilters>(defaultFilters);
 
   const genres = useMemo(
-    () => Array.from(new Set(games.flatMap((g) => g.genres ?? []))).sort(),
+    () => Array.from(new Set(games.flatMap((g) => g.genres))).sort(),
     [games],
   );
 
@@ -41,9 +41,9 @@ export function useGameFilters(games: Game[]) {
       result = result.filter((g) => g.title.toLowerCase().includes(q));
     }
 
-    if (filters.selectedGenres.length > 0) {
+    if (filters.selectedGenres.size > 0) {
       result = result.filter((g) =>
-        g.genres.some((genre) => filters.selectedGenres.includes(genre)),
+        g.genres.some((genre) => filters.selectedGenres.has(genre)),
       );
     }
 
