@@ -95,7 +95,7 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
             </button>
             <button
               type="button"
-              onClick={() => router.push("/shop/games")}
+              onClick={() => router.back()}
               className="w-full nes-btn text-xs"
             >
               WSTECZ
@@ -103,11 +103,10 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
           </div>
 
           {/* Specyfikacja */}
-          <div className="nes-container is-rounded with-title">
-            <ul className="space-y-2 mt-2">
+          <div className="nes-container is-dark">
+            <ul className="nes-list is-circle">
               <li className="text-xs">
-                🖥 OS:{" "}
-                {game.rawgSpecs?.minOs ?? game.minOs ?? "Brak informacji"}
+                OS: {game.rawgSpecs?.minOs ?? game.minOs ?? "Brak informacji"}
               </li>
               <li className="text-xs">
                 RAM:{" "}

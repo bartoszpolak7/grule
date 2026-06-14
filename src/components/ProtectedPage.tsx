@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/context/auth";
 
 export default function ProtectedPage({
@@ -10,11 +10,14 @@ export default function ProtectedPage({
 }>) {
   const { isLoggedIn, isLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isLoading) return;
-    if (!isLoggedIn) router.push("/auth/login");
-  }, [isLoggedIn, isLoading, router]);
+    if (!isLoggedIn) {
+      router.push(`/auth/login?redirect=${encodeURIComponent(pathname)}`);
+    }
+  }, [isLoggedIn, isLoading, router, pathname]);
 
   if (isLoading) return <Spinner />;
   if (!isLoggedIn) return null;

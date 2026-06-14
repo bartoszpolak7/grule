@@ -176,6 +176,5 @@ POST /api/trpc/auth.logout
 
 ## Znane ograniczenia
 
-- Płatność jest symulowana - brak integracji z prawdziwym systemem płatności
 - Refresh token nie jest rotowany przy każdym odświeżeniu (jedna aktywna sesja na użytkownika)
-- Wymagania sprzętowe parsowane są z tekstu - dla gier bez danych PC w RAWG wyświetlane jest „Brak informacji"
+- Wymagania sprzętowe parsowane są z tekstu - dla gier bez danych PC w RAWG wyświetlane jest „Brak informacji", POTATO ONLY DZIAŁA BARDZO SŁABO
