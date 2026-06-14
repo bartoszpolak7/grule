@@ -1,4 +1,3 @@
-// src/app/library/page.tsx
 "use client";
 import { useState } from "react";
 import ProtectedPage from "@/components/ProtectedPage";
@@ -6,6 +5,9 @@ import { trpc } from "@/trpc/client";
 import type { Game } from "@/generated/prisma/client";
 import Link from "next/link";
 import Image from "next/image";
+import PageWrapper from "@/components/PageWrapper";
+import GameSearch from "@/components/GameSearch";
+import { useGameFilters } from "@/lib/useGameFilters";
 
 export default function LibraryPage() {
   return (
@@ -17,110 +19,106 @@ export default function LibraryPage() {
 
 function LibraryContent() {
   const { data: orders, isLoading, isError } = trpc.orders.list.useQuery();
-  const [selected, setSelected] = useState<Game | null>(null);
-
-  if (isLoading) return <p>Loading your library...</p>;
-  if (isError) return <p>Failed to load library.</p>;
 
   const games = Array.from(
     new Map(
       orders?.flatMap((o) => o.items.map((i) => i.game)).map((g) => [g.id, g]),
     ).values(),
   );
+  const [selected, setSelected] = useState<Game | null>(null);
+  const { filters, setFilters, filtered, genres } = useGameFilters(games);
+
+  if (isLoading)
+    return (
+      <PageWrapper>
+        <p className="text-xs nes-text is-dark"> WCZYTYWANIE BIBLIOTEKI...</p>
+      </PageWrapper>
+    );
+  if (isError)
+    return (
+      <PageWrapper>
+        <p className="text-xs nes-text is-error">
+          NIE UDAŁO SIĘ WCZYTAĆ BIBLIOTEKI.
+        </p>
+      </PageWrapper>
+    );
 
   if (games.length === 0) {
     return (
-      <main>
-        <h1>Your Library</h1>
-        <p>
-          No games yet. <Link href="/shop/games">Browse the store.</Link>
-        </p>
-      </main>
+      <PageWrapper>
+        <div className="nes-container is-dark with-title text-center">
+          <p className="text-xs mb-4">Twoja biblioteka jest pusta!</p>
+          <Link href="/shop/games" className="nes-btn is-primary text-xs">
+            SZUKAJ W SKLEPIE
+          </Link>
+        </div>
+      </PageWrapper>
     );
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        height: "calc(100vh - 3.5rem)",
-      }}
-    >
-      {/* Left panel — game list */}
-      <aside
-        style={{
-          width: "280px",
-          borderRight: "1px solid #333",
-          overflowY: "auto",
-          padding: "1rem",
-          flexShrink: 0,
-        }}
-      >
-        <h2 style={{ marginBottom: "1rem" }}>Your Games</h2>
-        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-          {games.map((game) => (
-            <li
-              key={game.id}
-              onClick={() => setSelected(game)}
-              style={{
-                padding: "0.75rem",
-                cursor: "pointer",
-                borderRadius: "4px",
-                backgroundColor:
-                  selected?.id === game.id ? "#222" : "transparent",
-                marginBottom: "0.25rem",
-              }}
-            >
-              <p
-                style={{
-                  margin: 0,
-                  fontWeight: selected?.id === game.id ? "bold" : "normal",
-                }}
-              >
-                {game.title}
-              </p>
-              <p style={{ margin: 0, fontSize: "0.8rem", color: "#888" }}>
-                {game.genre}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </aside>
+    <PageWrapper>
+      <GameSearch
+        filters={filters}
+        onChange={setFilters}
+        genres={genres}
+        showPriceFilter={false} // no price filter in library
+      />
+      ;
+      <div className="grid gap-6 lg:grid-cols-[280px_1fr] items-start">
+        <aside className="nes-container is-dark with-title min-h-[50vh]">
+          <p className="title text-xs">TWOJE GRY</p>
+          <ul className="mt-4 space-y-2">
+            {filtered.map((game) => (
+              <li key={game.id}>
+                <button
+                  onClick={() => setSelected(game)}
+                  className={`w-full text-left nes-btn text-xs ${
+                    selected?.id === game.id ? "is-primary" : ""
+                  }`}
+                >
+                  {game.title}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </aside>
 
-      {/* Centre panel — game details */}
-      <main style={{ flex: 1, padding: "2rem", overflowY: "auto" }}>
-        {selected ? (
-          <GameDetail game={selected} />
-        ) : (
-          <div
-            style={{ color: "#888", marginTop: "4rem", textAlign: "center" }}
-          >
-            <p>Select a game from your library to view details.</p>
-          </div>
-        )}
-      </main>
-    </div>
+        <section className="nes-container is-dark with-title min-h-[50vh]">
+          <p className="title text-xs">SZCZEGÓŁY</p>
+          {selected ? (
+            <GameDetail game={selected} />
+          ) : (
+            <div className="flex min-h-[40vh] items-center justify-center text-center">
+              <p className="text-xs">Wybierz grę, aby zobaczyć jej opis.</p>
+            </div>
+          )}
+        </section>
+      </div>
+    </PageWrapper>
   );
 }
 
 function GameDetail({ game }: { game: Game }) {
   return (
-    <div>
+    <div className="space-y-4">
       {game.imageUrl && (
-        <Image
-          src={game.imageUrl}
-          alt={game.title}
-          style={{
-            width: "100%",
-            maxWidth: "400px",
-            borderRadius: "8px",
-            marginBottom: "1rem",
-          }}
-        />
+        <div className="border-2 border-black bg-black overflow-hidden">
+          <Image
+            src={game.imageUrl}
+            alt={game.title}
+            width={800}
+            height={400}
+            className="w-full h-48 object-cover"
+            style={{ imageRendering: "pixelated" }}
+          />
+        </div>
       )}
-      <h1>{game.title}</h1>
-      <p style={{ color: "#888" }}>{game.genre}</p>
-      <p style={{ marginTop: "1rem" }}>{game.description}</p>
+      <div>
+        <h1 className="text-lg font-bold mb-1">{game.title}</h1>
+        <p className="text-xs mb-3">{game.genre}</p>
+        <p className="text-xs leading-5">{game.description}</p>
+      </div>
     </div>
   );
 }

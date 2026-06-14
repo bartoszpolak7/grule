@@ -24,25 +24,14 @@ export default function ProtectedPage({
 
 function Spinner() {
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <div
-        style={{
-          width: "2rem",
-          height: "2rem",
-          border: "3px solid #e5e7eb",
-          borderTop: "3px solid #6b7280",
-          borderRadius: "50%",
-          animation: "spin 0.8s linear infinite",
-        }}
-      />
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    <div className="flex min-h-screen items-center justify-center px-4 py-24">
+      <div className="nes-container is-dark with-title text-center">
+        <p className="title text-xs">LOADING</p>
+        <div className="flex flex-col items-center justify-center py-8">
+          <div className="mb-4 text-4xl animate-bounce">⏳</div>
+          <p className="text-xs">Authenticating access...</p>
+        </div>
+      </div>
     </div>
   );
 }
