@@ -27,7 +27,7 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       RAWG_API_KEY: ${RAWG_API_KEY}
     volumes:
-      - .:/app
+    - .:/app
 
 
 volumes:

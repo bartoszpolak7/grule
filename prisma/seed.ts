@@ -1,6 +1,6 @@
 import { prisma } from "../src/lib/prisma";
 
-// skrypt seedujący, uruchamianie:
+// skrypt seedujący
 
 const games = [
   {
@@ -60,7 +60,7 @@ async function main() {
       update: { price: game.price, rawgId: game.rawgId, genres: game.genres },
       create: {
         ...game,
-        description: "Loading from RAWG...",
+        description: "No description.",
         imageUrl: null,
       },
     });

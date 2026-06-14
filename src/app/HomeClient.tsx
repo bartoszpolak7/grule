@@ -4,6 +4,8 @@ import type { Game } from "@/generated/prisma/client";
 import { useEffect, useState } from "react";
 import PageWrapper from "@/components/PageWrapper";
 import GameCard from "@/components/GameCard";
+import Image from "next/image";
+import gruleImg from "@/../public/grule_title.png";
 
 interface Props {
   deals: Game[];
@@ -19,30 +21,27 @@ export default function HomeClient({ deals }: Readonly<Props>) {
 
   return (
     <PageWrapper>
-      {/* Hero Section */}
+      {/* HERO SEKCJA */}
       <section className="nes-container is-dark with-title mb-12">
-        <p className="title">GRULE</p>
         <div className="flex flex-col gap-6">
-          <div>
+          <div className="flex justify-center">
             <h1 className="text-2xl font-bold mb-4">
-              Pójdzie na każdym ziemniaku
+              Wykopki najlepszych gier
             </h1>
+          </div>
+
+          <div className="flex justify-center">
+            <Image src={gruleImg} alt="Big logo"></Image>
+          </div>
+
+          <div className="flex justify-center">
             <p className="text-xs mb-4">
-              Browse curated PC games, build your library, and checkout with
-              style. Made for gamers who appreciate the grind.
+              Jeśli komputer znalazłeś wykrywaczem, znajdziesz tu gry dla
+              siebie.
             </p>
           </div>
 
-          <div className="nes-container with-title is-rounded bg-white mb-6">
-            <p className="title text-xs text-amber-600">DASHBOARD ASSET</p>
-            <div className="flex flex-col items-center justify-center gap-4 py-8">
-              <div className="flex h-32 w-32 items-center justify-center bg-black border-4 border-black">
-                <span className="text-4xl">🎮</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-3 flex-wrap">
+          <div className="flex gap-3 flex-wrap justify-center">
             <Link href="/shop/games" className="nes-btn is-primary">
               Przeglądaj gry
             </Link>
@@ -53,7 +52,7 @@ export default function HomeClient({ deals }: Readonly<Props>) {
         </div>
       </section>
 
-      {/* Deals Section */}
+      {/* SEKCJA OFERT */}
       <section className="nes-container is-dark with-title">
         <p className="title">NAJLEPSZE OFERTY</p>
 

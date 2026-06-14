@@ -52,7 +52,7 @@ export default function GamesListClient({ games }: Readonly<Props>) {
           </div>
         </div>
 
-        {/* Genre panel */}
+        {/* Gatunki panel */}
         <aside className="nes-container is-dark with-title h-fit">
           <p className="title text-xs">GATUNKI</p>
           <ul className="space-y-2 mt-2">
@@ -61,7 +61,7 @@ export default function GamesListClient({ games }: Readonly<Props>) {
                 <label className="flex items-center gap-2 text-xs cursor-pointer">
                   <input
                     type="checkbox"
-                    className="nes-checkbox"
+                    className="nes-checkbox is-dark"
                     checked={filters.selectedGenres.has(genre)}
                     onChange={() => {
                       const next = new Set(filters.selectedGenres);
@@ -69,6 +69,7 @@ export default function GamesListClient({ games }: Readonly<Props>) {
                       setFilters({ ...filters, selectedGenres: next });
                     }}
                   />
+
                   <span>{genre}</span>
                 </label>
               </li>

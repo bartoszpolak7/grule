@@ -87,7 +87,7 @@ export default function GameSearch({
           <label className="flex items-center gap-2 text-xs cursor-pointer">
             <input
               type="checkbox"
-              className="nes-checkbox"
+              className="nes-checkbox is-dark"
               checked={filters.potatoOnly}
               onChange={(e) => update({ potatoOnly: e.target.checked })}
             />

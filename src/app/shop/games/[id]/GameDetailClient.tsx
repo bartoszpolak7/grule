@@ -40,7 +40,7 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
               </p>
             )}
             <p className="text-xs leading-5">
-              {game.description ?? game.rawgDescription}
+              {game.rawgDescription ?? game.description}
             </p>
             {game.rawgScreenshots && game.rawgScreenshots.length > 0 && (
               <div className="mt-4 grid grid-cols-2 gap-2">
@@ -110,19 +110,19 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
                 {game.rawgSpecs?.minOs ?? game.minOs ?? "Brak informacji"}
               </li>
               <li className="text-xs">
-                🧠 RAM:{" "}
+                RAM:{" "}
                 {(game.rawgSpecs?.minRamGb ?? game.minRamGb)
                   ? `${game.rawgSpecs?.minRamGb ?? game.minRamGb}GB minimum`
                   : "Brak informacji"}
               </li>
               <li className="text-xs">
-                💾 Dysk:{" "}
+                Dysk:{" "}
                 {(game.rawgSpecs?.minStorageGb ?? game.minStorageGb)
                   ? `${game.rawgSpecs?.minStorageGb ?? game.minStorageGb}GB`
                   : "Brak informacji"}
               </li>
               <li className="text-xs">
-                🎮 GPU:{" "}
+                GPU:{" "}
                 {game.rawgSpecs
                   ? game.rawgSpecs.requiresGpu
                     ? "Wymagana dedykowana karta graficzna"
