@@ -1,4 +1,4 @@
-# 🥔 Grule — Sklep z grami dla ziemniaczanych PC
+# 🥔 Grule: sklep z grami dla ziemniaczanych PC
 
 > _„Odpali nawet na ziemniaku"_
 
@@ -110,7 +110,7 @@ grule/
 
 ## Decyzje architektoniczne (ADR)
 
-Dokumentacja decyzji architektonicznych znajduje się w pliku [`ADR.md`](./ADR.md).
+Dokumentacja decyzji architektonicznych znajduje się w pliku [`ADR.pdf`](./ADR.pdf).
 
 ---
 
