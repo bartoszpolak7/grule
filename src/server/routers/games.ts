@@ -1,6 +1,9 @@
 import { z } from "zod";
 import { router, publicProcedure } from "../trpc";
 import { prisma } from "@/lib/prisma";
+import { EnrichedGame } from "@/lib/types";
+import { TRPCError } from "@trpc/server";
+import { getRawgGame } from "@/lib/rawg";
 
 export const gamesRouter = router({
   list: publicProcedure
@@ -14,12 +17,37 @@ export const gamesRouter = router({
 
   byId: publicProcedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ input }) => {
-      const game = await prisma.game.findUnique({
-        where: { id: input.id },
-      });
-      if (!game) throw new Error("Game not found");
-      return game;
+    .query(async ({ input }): Promise<EnrichedGame> => {
+      const game = await prisma.game.findUnique({ where: { id: input.id } });
+      if (!game) throw new TRPCError({ code: "NOT_FOUND" });
+      if (!game.rawgId) return game;
+
+      const rawg = await getRawgGame(game.rawgId);
+      if (!rawg) return game;
+
+      // załaduj dane do bazy danych jeśli jeszcze ich tam nie ma
+      if (rawg.specs.minRamGb && !game.minRamGb) {
+        await prisma.game.update({
+          where: { id: game.id },
+          data: {
+            minRamGb: rawg.specs.minRamGb,
+            minStorageGb: rawg.specs.minStorageGb,
+            requiresGpu: rawg.specs.requiresGpu,
+            minOs: rawg.specs.minOs,
+            imageUrl: rawg.imageUrl ?? game.imageUrl,
+          },
+        });
+      }
+
+      return {
+        ...game,
+        imageUrl: rawg.imageUrl ?? game.imageUrl,
+        rawgRating: rawg.rating,
+        rawgDescription: rawg.description,
+        rawgMetacritic: rawg.metacritic,
+        rawgScreenshots: rawg.screenshots,
+        rawgSpecs: rawg.specs,
+      };
     }),
 
   bestDeals: publicProcedure.query(async () => {

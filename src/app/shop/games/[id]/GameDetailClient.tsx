@@ -92,7 +92,7 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
               disabled={inCart}
               className={`w-full nes-btn text-xs ${inCart ? "is-disabled" : "is-success"}`}
             >
-              {inCart ? "IN CART" : "ADD TO CART"}
+              {inCart ? "W KOSZYKU" : "DODAJ DO KOSZYKA"}
             </button>
             <button
               type="button"

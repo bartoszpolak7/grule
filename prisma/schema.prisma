@@ -23,14 +23,19 @@ model User {
 }
 
 model Game {
-  id          String      @id @default(cuid())
-  title       String      @unique
-  description String
-  price       Float
-  genre       String
-  imageUrl    String?
-  createdAt   DateTime    @default(now())
-  orderItems  OrderItem[]
+  id              String      @id @default(cuid())
+  rawgId          Int?        @unique
+  title           String      @unique
+  description     String
+  price           Float
+  genre           String
+  imageUrl        String?
+  minRamGb        Int?
+  minStorageGb    Int?
+  requiresGpu     Boolean     @default(false)
+  minOs           String?
+  createdAt       DateTime    @default(now())
+  orderItems      OrderItem[]
 }
 
 model Order {

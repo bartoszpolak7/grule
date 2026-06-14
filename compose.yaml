@@ -24,7 +24,8 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL:  postgres://postgres:postgres@db:5432/grule
-      JWT_SECRET: cbtwWWtbXXwilGVZMkeHNEFupCCyhNwj1B4mLuabUNx
+      JWT_SECRET: ${JWT_SECRET}
+      RAWG_API_KEY: ${RAWG_API_KEY}
     volumes:
       - .:/app
 

@@ -27,80 +27,122 @@ export type AggregateGame = {
 }
 
 export type GameAvgAggregateOutputType = {
+  rawgId: number | null
   price: number | null
+  minRamGb: number | null
+  minStorageGb: number | null
 }
 
 export type GameSumAggregateOutputType = {
+  rawgId: number | null
   price: number | null
+  minRamGb: number | null
+  minStorageGb: number | null
 }
 
 export type GameMinAggregateOutputType = {
   id: string | null
+  rawgId: number | null
   title: string | null
   description: string | null
   price: number | null
   genre: string | null
   imageUrl: string | null
+  minRamGb: number | null
+  minStorageGb: number | null
+  requiresGpu: boolean | null
+  minOs: string | null
   createdAt: Date | null
 }
 
 export type GameMaxAggregateOutputType = {
   id: string | null
+  rawgId: number | null
   title: string | null
   description: string | null
   price: number | null
   genre: string | null
   imageUrl: string | null
+  minRamGb: number | null
+  minStorageGb: number | null
+  requiresGpu: boolean | null
+  minOs: string | null
   createdAt: Date | null
 }
 
 export type GameCountAggregateOutputType = {
   id: number
+  rawgId: number
   title: number
   description: number
   price: number
   genre: number
   imageUrl: number
+  minRamGb: number
+  minStorageGb: number
+  requiresGpu: number
+  minOs: number
   createdAt: number
   _all: number
 }
 
 
 export type GameAvgAggregateInputType = {
+  rawgId?: true
   price?: true
+  minRamGb?: true
+  minStorageGb?: true
 }
 
 export type GameSumAggregateInputType = {
+  rawgId?: true
   price?: true
+  minRamGb?: true
+  minStorageGb?: true
 }
 
 export type GameMinAggregateInputType = {
   id?: true
+  rawgId?: true
   title?: true
   description?: true
   price?: true
   genre?: true
   imageUrl?: true
+  minRamGb?: true
+  minStorageGb?: true
+  requiresGpu?: true
+  minOs?: true
   createdAt?: true
 }
 
 export type GameMaxAggregateInputType = {
   id?: true
+  rawgId?: true
   title?: true
   description?: true
   price?: true
   genre?: true
   imageUrl?: true
+  minRamGb?: true
+  minStorageGb?: true
+  requiresGpu?: true
+  minOs?: true
   createdAt?: true
 }
 
 export type GameCountAggregateInputType = {
   id?: true
+  rawgId?: true
   title?: true
   description?: true
   price?: true
   genre?: true
   imageUrl?: true
+  minRamGb?: true
+  minStorageGb?: true
+  requiresGpu?: true
+  minOs?: true
   createdAt?: true
   _all?: true
 }
@@ -193,11 +235,16 @@ export type GameGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type GameGroupByOutputType = {
   id: string
+  rawgId: number | null
   title: string
   description: string
   price: number
   genre: string
   imageUrl: string | null
+  minRamGb: number | null
+  minStorageGb: number | null
+  requiresGpu: boolean
+  minOs: string | null
   createdAt: Date
   _count: GameCountAggregateOutputType | null
   _avg: GameAvgAggregateOutputType | null
@@ -226,28 +273,39 @@ export type GameWhereInput = {
   OR?: Prisma.GameWhereInput[]
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   id?: Prisma.StringFilter<"Game"> | string
+  rawgId?: Prisma.IntNullableFilter<"Game"> | number | null
   title?: Prisma.StringFilter<"Game"> | string
   description?: Prisma.StringFilter<"Game"> | string
   price?: Prisma.FloatFilter<"Game"> | number
   genre?: Prisma.StringFilter<"Game"> | string
   imageUrl?: Prisma.StringNullableFilter<"Game"> | string | null
+  minRamGb?: Prisma.IntNullableFilter<"Game"> | number | null
+  minStorageGb?: Prisma.IntNullableFilter<"Game"> | number | null
+  requiresGpu?: Prisma.BoolFilter<"Game"> | boolean
+  minOs?: Prisma.StringNullableFilter<"Game"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   orderItems?: Prisma.OrderItemListRelationFilter
 }
 
 export type GameOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  rawgId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
   genre?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  minRamGb?: Prisma.SortOrderInput | Prisma.SortOrder
+  minStorageGb?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiresGpu?: Prisma.SortOrder
+  minOs?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   orderItems?: Prisma.OrderItemOrderByRelationAggregateInput
 }
 
 export type GameWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  rawgId?: number
   title?: string
   AND?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   OR?: Prisma.GameWhereInput[]
@@ -256,17 +314,26 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
   price?: Prisma.FloatFilter<"Game"> | number
   genre?: Prisma.StringFilter<"Game"> | string
   imageUrl?: Prisma.StringNullableFilter<"Game"> | string | null
+  minRamGb?: Prisma.IntNullableFilter<"Game"> | number | null
+  minStorageGb?: Prisma.IntNullableFilter<"Game"> | number | null
+  requiresGpu?: Prisma.BoolFilter<"Game"> | boolean
+  minOs?: Prisma.StringNullableFilter<"Game"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   orderItems?: Prisma.OrderItemListRelationFilter
-}, "id" | "title">
+}, "id" | "rawgId" | "title">
 
 export type GameOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  rawgId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
   genre?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  minRamGb?: Prisma.SortOrderInput | Prisma.SortOrder
+  minStorageGb?: Prisma.SortOrderInput | Prisma.SortOrder
+  requiresGpu?: Prisma.SortOrder
+  minOs?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.GameCountOrderByAggregateInput
   _avg?: Prisma.GameAvgOrderByAggregateInput
@@ -280,129 +347,198 @@ export type GameScalarWhereWithAggregatesInput = {
   OR?: Prisma.GameScalarWhereWithAggregatesInput[]
   NOT?: Prisma.GameScalarWhereWithAggregatesInput | Prisma.GameScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Game"> | string
+  rawgId?: Prisma.IntNullableWithAggregatesFilter<"Game"> | number | null
   title?: Prisma.StringWithAggregatesFilter<"Game"> | string
   description?: Prisma.StringWithAggregatesFilter<"Game"> | string
   price?: Prisma.FloatWithAggregatesFilter<"Game"> | number
   genre?: Prisma.StringWithAggregatesFilter<"Game"> | string
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
+  minRamGb?: Prisma.IntNullableWithAggregatesFilter<"Game"> | number | null
+  minStorageGb?: Prisma.IntNullableWithAggregatesFilter<"Game"> | number | null
+  requiresGpu?: Prisma.BoolWithAggregatesFilter<"Game"> | boolean
+  minOs?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Game"> | Date | string
 }
 
 export type GameCreateInput = {
   id?: string
+  rawgId?: number | null
   title: string
   description: string
   price: number
   genre: string
   imageUrl?: string | null
+  minRamGb?: number | null
+  minStorageGb?: number | null
+  requiresGpu?: boolean
+  minOs?: string | null
   createdAt?: Date | string
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutGameInput
 }
 
 export type GameUncheckedCreateInput = {
   id?: string
+  rawgId?: number | null
   title: string
   description: string
   price: number
   genre: string
   imageUrl?: string | null
+  minRamGb?: number | null
+  minStorageGb?: number | null
+  requiresGpu?: boolean
+  minOs?: string | null
   createdAt?: Date | string
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutGameInput
 }
 
 export type GameUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  rawgId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   genre?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  minRamGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minStorageGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiresGpu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minOs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItems?: Prisma.OrderItemUpdateManyWithoutGameNestedInput
 }
 
 export type GameUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  rawgId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   genre?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  minRamGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minStorageGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiresGpu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minOs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutGameNestedInput
 }
 
 export type GameCreateManyInput = {
   id?: string
+  rawgId?: number | null
   title: string
   description: string
   price: number
   genre: string
   imageUrl?: string | null
+  minRamGb?: number | null
+  minStorageGb?: number | null
+  requiresGpu?: boolean
+  minOs?: string | null
   createdAt?: Date | string
 }
 
 export type GameUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  rawgId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   genre?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  minRamGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minStorageGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiresGpu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minOs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type GameUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  rawgId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   genre?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  minRamGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minStorageGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiresGpu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minOs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type GameCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  rawgId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
   genre?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  minRamGb?: Prisma.SortOrder
+  minStorageGb?: Prisma.SortOrder
+  requiresGpu?: Prisma.SortOrder
+  minOs?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type GameAvgOrderByAggregateInput = {
+  rawgId?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  minRamGb?: Prisma.SortOrder
+  minStorageGb?: Prisma.SortOrder
 }
 
 export type GameMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  rawgId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
   genre?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  minRamGb?: Prisma.SortOrder
+  minStorageGb?: Prisma.SortOrder
+  requiresGpu?: Prisma.SortOrder
+  minOs?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type GameMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  rawgId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
   price?: Prisma.SortOrder
   genre?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  minRamGb?: Prisma.SortOrder
+  minStorageGb?: Prisma.SortOrder
+  requiresGpu?: Prisma.SortOrder
+  minOs?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type GameSumOrderByAggregateInput = {
+  rawgId?: Prisma.SortOrder
   price?: Prisma.SortOrder
+  minRamGb?: Prisma.SortOrder
+  minStorageGb?: Prisma.SortOrder
 }
 
 export type GameScalarRelationFilter = {
   is?: Prisma.GameWhereInput
   isNot?: Prisma.GameWhereInput
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type FloatFieldUpdateOperationsInput = {
@@ -415,6 +551,10 @@ export type FloatFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type GameCreateNestedOneWithoutOrderItemsInput = {
@@ -433,21 +573,31 @@ export type GameUpdateOneRequiredWithoutOrderItemsNestedInput = {
 
 export type GameCreateWithoutOrderItemsInput = {
   id?: string
+  rawgId?: number | null
   title: string
   description: string
   price: number
   genre: string
   imageUrl?: string | null
+  minRamGb?: number | null
+  minStorageGb?: number | null
+  requiresGpu?: boolean
+  minOs?: string | null
   createdAt?: Date | string
 }
 
 export type GameUncheckedCreateWithoutOrderItemsInput = {
   id?: string
+  rawgId?: number | null
   title: string
   description: string
   price: number
   genre: string
   imageUrl?: string | null
+  minRamGb?: number | null
+  minStorageGb?: number | null
+  requiresGpu?: boolean
+  minOs?: string | null
   createdAt?: Date | string
 }
 
@@ -469,21 +619,31 @@ export type GameUpdateToOneWithWhereWithoutOrderItemsInput = {
 
 export type GameUpdateWithoutOrderItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  rawgId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   genre?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  minRamGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minStorageGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiresGpu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minOs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type GameUncheckedUpdateWithoutOrderItemsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  rawgId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
   price?: Prisma.FloatFieldUpdateOperationsInput | number
   genre?: Prisma.StringFieldUpdateOperationsInput | string
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  minRamGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  minStorageGb?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  requiresGpu?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  minOs?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -520,11 +680,16 @@ export type GameCountOutputTypeCountOrderItemsArgs<ExtArgs extends runtime.Types
 
 export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  rawgId?: boolean
   title?: boolean
   description?: boolean
   price?: boolean
   genre?: boolean
   imageUrl?: boolean
+  minRamGb?: boolean
+  minStorageGb?: boolean
+  requiresGpu?: boolean
+  minOs?: boolean
   createdAt?: boolean
   orderItems?: boolean | Prisma.Game$orderItemsArgs<ExtArgs>
   _count?: boolean | Prisma.GameCountOutputTypeDefaultArgs<ExtArgs>
@@ -532,35 +697,50 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 
 export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  rawgId?: boolean
   title?: boolean
   description?: boolean
   price?: boolean
   genre?: boolean
   imageUrl?: boolean
+  minRamGb?: boolean
+  minStorageGb?: boolean
+  requiresGpu?: boolean
+  minOs?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["game"]>
 
 export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  rawgId?: boolean
   title?: boolean
   description?: boolean
   price?: boolean
   genre?: boolean
   imageUrl?: boolean
+  minRamGb?: boolean
+  minStorageGb?: boolean
+  requiresGpu?: boolean
+  minOs?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["game"]>
 
 export type GameSelectScalar = {
   id?: boolean
+  rawgId?: boolean
   title?: boolean
   description?: boolean
   price?: boolean
   genre?: boolean
   imageUrl?: boolean
+  minRamGb?: boolean
+  minStorageGb?: boolean
+  requiresGpu?: boolean
+  minOs?: boolean
   createdAt?: boolean
 }
 
-export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "description" | "price" | "genre" | "imageUrl" | "createdAt", ExtArgs["result"]["game"]>
+export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "rawgId" | "title" | "description" | "price" | "genre" | "imageUrl" | "minRamGb" | "minStorageGb" | "requiresGpu" | "minOs" | "createdAt", ExtArgs["result"]["game"]>
 export type GameInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   orderItems?: boolean | Prisma.Game$orderItemsArgs<ExtArgs>
   _count?: boolean | Prisma.GameCountOutputTypeDefaultArgs<ExtArgs>
@@ -575,11 +755,16 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    rawgId: number | null
     title: string
     description: string
     price: number
     genre: string
     imageUrl: string | null
+    minRamGb: number | null
+    minStorageGb: number | null
+    requiresGpu: boolean
+    minOs: string | null
     createdAt: Date
   }, ExtArgs["result"]["game"]>
   composites: {}
@@ -1006,11 +1191,16 @@ export interface Prisma__GameClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface GameFieldRefs {
   readonly id: Prisma.FieldRef<"Game", 'String'>
+  readonly rawgId: Prisma.FieldRef<"Game", 'Int'>
   readonly title: Prisma.FieldRef<"Game", 'String'>
   readonly description: Prisma.FieldRef<"Game", 'String'>
   readonly price: Prisma.FieldRef<"Game", 'Float'>
   readonly genre: Prisma.FieldRef<"Game", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Game", 'String'>
+  readonly minRamGb: Prisma.FieldRef<"Game", 'Int'>
+  readonly minStorageGb: Prisma.FieldRef<"Game", 'Int'>
+  readonly requiresGpu: Prisma.FieldRef<"Game", 'Boolean'>
+  readonly minOs: Prisma.FieldRef<"Game", 'String'>
   readonly createdAt: Prisma.FieldRef<"Game", 'DateTime'>
 }
     

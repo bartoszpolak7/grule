@@ -86,11 +86,16 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const GameScalarFieldEnum = {
   id: 'id',
+  rawgId: 'rawgId',
   title: 'title',
   description: 'description',
   price: 'price',
   genre: 'genre',
   imageUrl: 'imageUrl',
+  minRamGb: 'minRamGb',
+  minStorageGb: 'minStorageGb',
+  requiresGpu: 'requiresGpu',
+  minOs: 'minOs',
   createdAt: 'createdAt'
 } as const
 

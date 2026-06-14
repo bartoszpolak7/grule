@@ -70,7 +70,7 @@ export default function GameListClient({ games }: Readonly<Props>) {
                 disabled={inCart}
                 className={`nes-btn w-full text-xs ${inCart ? "is-disabled" : "is-success"}`}
               >
-                {inCart ? "IN CART" : "ADD TO CART"}
+                {inCart ? "W KOSZYKU" : "DODAJ DO KOSZYKA"}
               </button>
             </article>
           );
