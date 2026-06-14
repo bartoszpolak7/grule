@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { trpc } from "@/trpc/client";
@@ -7,6 +7,14 @@ import { useAuth } from "@/context/auth";
 import PageWrapper from "@/components/PageWrapper";
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={null}>
+      <LoginContent />
+    </Suspense>
+  );
+}
+
+function LoginContent() {
   const router = useRouter();
   const { setLoggedIn } = useAuth();
   const [email, setEmail] = useState("");
