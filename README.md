@@ -1,4 +1,4 @@
-# 🥔 Grule — Sklep z grami dla ziemniaczanych PC
+# 🥔 Grule: sklep z grami dla ziemniaczanych PC
 
 > _„Odpali nawet na ziemniaku"_
 
