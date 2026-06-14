@@ -1,11 +1,12 @@
 "use client";
 import { useCart } from "@/context/cart";
 import { useRouter } from "next/navigation";
-import type { Game } from "@/generated/prisma/client";
 import Image from "next/image";
+import type { EnrichedGame } from "@/lib/types";
+import PageWrapper from "@/components/PageWrapper";
 
 interface Props {
-  game: Game;
+  game: EnrichedGame;
 }
 
 export default function GameDetailClient({ game }: Readonly<Props>) {
@@ -20,19 +21,50 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
   };
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+    <PageWrapper>
       <div className="grid gap-6 lg:grid-cols-[1fr_0.8fr]">
         <section className="nes-container is-dark with-title">
-          <p className="title text-xs">GAME DETAIL</p>
+          <p className="title text-xs">SZCZEGÓŁY GRY</p>
           <div className="mb-4">
             <h1 className="text-xl font-bold mb-2">{game.title}</h1>
             <p className="text-xs mb-4">{game.genre}</p>
-            <p className="text-xs leading-5">{game.description}</p>
+
+            {game.rawgRating && (
+              <p className="text-xs mb-2">
+                ⭐ {game.rawgRating.toFixed(1)} / 5
+              </p>
+            )}
+            {game.rawgMetacritic && (
+              <p className="text-xs mb-4">
+                🎮 Metacritic: {game.rawgMetacritic}
+              </p>
+            )}
+            <p className="text-xs leading-5">
+              {game.description ?? game.rawgDescription}
+            </p>
+            {game.rawgScreenshots && game.rawgScreenshots.length > 0 && (
+              <div className="mt-4 grid grid-cols-2 gap-2">
+                {game.rawgScreenshots.slice(0, 4).map((url, i) => (
+                  <div
+                    key={i}
+                    className="border-2 border-black overflow-hidden"
+                  >
+                    <Image
+                      src={url}
+                      alt={`${game.title} screenshot ${i + 1}`}
+                      width={400}
+                      height={225}
+                      className="w-full h-24 object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
         <aside className="nes-container is-dark with-title">
-          <p className="title text-xs">PURCHASE</p>
+          <p className="title text-xs">KUP</p>
           {game.imageUrl ? (
             <div className="mb-4 border-2 border-black bg-black overflow-hidden">
               <Image
@@ -46,7 +78,7 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
             </div>
           ) : (
             <div className="flex h-40 items-center justify-center border-2 border-black bg-gray-300 mb-4 text-xs font-bold">
-              NO PREVIEW
+              BRAK PODGLĄDU
             </div>
           )}
 
@@ -67,11 +99,11 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
               onClick={() => router.push("/shop/games")}
               className="w-full nes-btn text-xs"
             >
-              BACK
+              WSTECZ
             </button>
           </div>
         </aside>
       </div>
-    </main>
+    </PageWrapper>
   );
 }

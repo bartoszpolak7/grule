@@ -1,5 +1,6 @@
 import { trpcServer } from "@/trpc/server";
 import GameDetailClient from "./GameDetailClient";
+import { EnrichedGame } from "@/lib/types";
 
 export const dynamic = "force-dynamic";
 
@@ -13,5 +14,5 @@ export default async function GameDetailPage({ params }: Readonly<Props>) {
   const { id } = await params;
   const game = await trpcServer.games.byId.query({ id });
 
-  return <GameDetailClient game={game} />;
+  return <GameDetailClient game={game as EnrichedGame} />;
 }
