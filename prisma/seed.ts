@@ -53,16 +53,18 @@ const games = [
   },
 ];
 
-// funkcja, która sprawdza czy tytuł już znajduje się w bibliotece
 async function main() {
   for (const game of games) {
     await prisma.game.upsert({
       where: { title: game.title },
-      update: {},
-      create: game,
+      update: { price: game.price, rawgId: game.rawgId, genres: game.genres },
+      create: {
+        ...game,
+        description: "Loading from RAWG...",
+        imageUrl: null,
+      },
     });
   }
-  console.log("Seed complete");
 }
 
 main()
