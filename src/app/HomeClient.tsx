@@ -21,11 +21,11 @@ export default function HomeClient({ deals }: Readonly<Props>) {
     <PageWrapper>
       {/* Hero Section */}
       <section className="nes-container is-dark with-title mb-12">
-        <p className="title">GRULE GAMING STORE</p>
+        <p className="title">GRULE</p>
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-2xl font-bold mb-4">
-              Your PC gaming HQ awaits
+              Pójdzie na każdym ziemniaku
             </h1>
             <p className="text-xs mb-4">
               Browse curated PC games, build your library, and checkout with
@@ -39,21 +39,15 @@ export default function HomeClient({ deals }: Readonly<Props>) {
               <div className="flex h-32 w-32 items-center justify-center bg-black border-4 border-black">
                 <span className="text-4xl">🎮</span>
               </div>
-              <div className="text-center">
-                <p className="text-xs font-bold mb-2">
-                  Drop your custom logo or spinning loading asset here
-                </p>
-                <p className="text-xs">Upload once ready in assets folder</p>
-              </div>
             </div>
           </div>
 
           <div className="flex gap-3 flex-wrap">
             <Link href="/shop/games" className="nes-btn is-primary">
-              Browse Store
+              Przeglądaj gry
             </Link>
             <Link href="/library" className="nes-btn is-success">
-              View Library
+              Bilbioteka
             </Link>
           </div>
         </div>
@@ -61,7 +55,7 @@ export default function HomeClient({ deals }: Readonly<Props>) {
 
       {/* Deals Section */}
       <section className="nes-container is-dark with-title">
-        <p className="title">FEATURED DEALS</p>
+        <p className="title">NAJLEPSZE OFERTY</p>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {deals.map((game) => (

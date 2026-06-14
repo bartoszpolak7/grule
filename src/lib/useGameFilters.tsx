@@ -4,12 +4,11 @@ import { useState, useMemo } from "react";
 import type { Game } from "@/generated/prisma/client";
 
 export type SortOption = "az" | "za" | "price-asc" | "price-desc";
-export type GenreOption = string | "all";
 
 export interface SearchFilters {
   query: string;
   sort: SortOption;
-  genre: GenreOption;
+  selectedGenres: string[];
   maxPrice: number | null;
   maxRamGb: number | null;
   maxStorageGb: number | null;
@@ -19,7 +18,7 @@ export interface SearchFilters {
 export const defaultFilters: SearchFilters = {
   query: "",
   sort: "az",
-  genre: "all",
+  selectedGenres: [],
   maxPrice: null,
   maxRamGb: null,
   maxStorageGb: null,
@@ -30,7 +29,7 @@ export function useGameFilters(games: Game[]) {
   const [filters, setFilters] = useState<SearchFilters>(defaultFilters);
 
   const genres = useMemo(
-    () => Array.from(new Set(games.map((g) => g.genre))).sort(),
+    () => Array.from(new Set(games.flatMap((g) => g.genres ?? []))).sort(),
     [games],
   );
 
@@ -42,8 +41,10 @@ export function useGameFilters(games: Game[]) {
       result = result.filter((g) => g.title.toLowerCase().includes(q));
     }
 
-    if (filters.genre !== "all") {
-      result = result.filter((g) => g.genre === filters.genre);
+    if (filters.selectedGenres.length > 0) {
+      result = result.filter((g) =>
+        g.genres.some((genre) => filters.selectedGenres.includes(genre)),
+      );
     }
 
     if (filters.maxPrice !== null) {
