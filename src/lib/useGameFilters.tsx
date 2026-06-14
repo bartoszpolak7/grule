@@ -1,14 +1,29 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import type { SearchFilters } from "@/components/GameSearch";
 import type { Game } from "@/generated/prisma/client";
+
+export type SortOption = "az" | "za" | "price-asc" | "price-desc";
+export type GenreOption = string | "all";
+
+export interface SearchFilters {
+  query: string;
+  sort: SortOption;
+  genre: GenreOption;
+  maxPrice: number | null;
+  maxRamGb: number | null;
+  maxStorageGb: number | null;
+  potatoOnly: boolean;
+}
 
 export const defaultFilters: SearchFilters = {
   query: "",
   sort: "az",
   genre: "all",
   maxPrice: null,
+  maxRamGb: null,
+  maxStorageGb: null,
+  potatoOnly: false,
 };
 
 export function useGameFilters(games: Game[]) {
@@ -33,6 +48,23 @@ export function useGameFilters(games: Game[]) {
 
     if (filters.maxPrice !== null) {
       result = result.filter((g) => g.price <= filters.maxPrice!);
+    }
+
+    if (filters.maxRamGb !== null) {
+      result = result.filter(
+        (g) => g.minRamGb === null || g.minRamGb <= filters.maxRamGb!,
+      );
+    }
+
+    if (filters.maxStorageGb !== null) {
+      result = result.filter(
+        (g) =>
+          g.minStorageGb === null || g.minStorageGb <= filters.maxStorageGb!,
+      );
+    }
+
+    if (filters.potatoOnly) {
+      result = result.filter((g) => !g.requiresGpu);
     }
 
     switch (filters.sort) {

@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
 
   // standalone przeznaczony do minimalnego buildu
   // przeznaczony na Docker
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "media.rawg.io",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

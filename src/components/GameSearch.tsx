@@ -1,14 +1,9 @@
 "use client";
 
+import { SearchFilters } from "@/lib/useGameFilters";
+
 export type SortOption = "az" | "za" | "price-asc" | "price-desc";
 export type GenreOption = string | "all";
-
-export interface SearchFilters {
-  query: string;
-  sort: SortOption;
-  genre: GenreOption;
-  maxPrice: number | null;
-}
 
 interface Props {
   filters: SearchFilters;
@@ -22,7 +17,7 @@ export default function GameSearch({
   onChange,
   genres,
   showPriceFilter = true,
-}: Props) {
+}: Readonly<Props>) {
   const update = (partial: Partial<SearchFilters>) =>
     onChange({ ...filters, ...partial });
 
@@ -31,7 +26,7 @@ export default function GameSearch({
       <p className="title text-xs">Wypatrz bulwę</p>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {/* Text search */}
+        {/* TEKSTOWE - TYTUŁ */}
         <div className="nes-field">
           <label htmlFor="search">Szukaj...</label>
           <input
@@ -44,7 +39,7 @@ export default function GameSearch({
           />
         </div>
 
-        {/* Genre filter */}
+        {/* GATUNEK */}
         <div className="nes-field">
           <label htmlFor="genre">GATUNEK</label>
           <div className="nes-select is-dark">
@@ -63,7 +58,7 @@ export default function GameSearch({
           </div>
         </div>
 
-        {/* Sort */}
+        {/* SORTOWANIE */}
         <div className="nes-field">
           <label htmlFor="sort">SORTUJ</label>
           <div className="nes-select is-dark">
@@ -85,7 +80,7 @@ export default function GameSearch({
           <div className="nes-field">
             <label htmlFor="maxPrice">
               MAKSYMALNA CENA{" "}
-              {filters.maxPrice !== null ? `$${filters.maxPrice}` : "ANY"}
+              {filters.maxPrice === null ? "DOWOLNA" : `$${filters.maxPrice}`}
             </label>
             <input
               id="maxPrice"
@@ -103,6 +98,72 @@ export default function GameSearch({
             />
           </div>
         )}
+
+        {/* POTATO ONLY */}
+        <div className="flex items-center gap-2 mt-2">
+          <label className="flex items-center gap-2 text-xs cursor-pointer">
+            <input
+              type="checkbox"
+              className="nes-checkbox"
+              checked={filters.potatoOnly}
+              onChange={(e) => update({ potatoOnly: e.target.checked })}
+            />
+            <span>🥔 POTATO PC ONLY (brak dedykowanej karty graficznej)</span>
+          </label>
+        </div>
+
+        {/* MAX RAM */}
+        <div className="nes-field">
+          <label htmlFor="maxRam">
+            MAKS. RAM:{" "}
+            {filters.maxRamGb === null ? "DOWOLNY" : `${filters.maxRamGb}GB`}
+          </label>
+          <input
+            id="maxRam"
+            type="range"
+            min={1}
+            max={33} // 33 = sentinel for "any"
+            step={1}
+            value={filters.maxRamGb ?? 33}
+            onChange={(e) => {
+              const val = Number(e.target.value);
+              update({ maxRamGb: val === 33 ? null : val });
+            }}
+            style={{ width: "100%", marginTop: "0.5rem" }}
+          />
+          <div className="flex justify-between text-xs mt-1">
+            <span>1GB</span>
+            <span>16GB</span>
+            <span>DOWOLNY</span>
+          </div>
+        </div>
+
+        <div className="nes-field">
+          <label htmlFor="maxStorage">
+            MAKS. DYSK:{" "}
+            {filters.maxStorageGb === null
+              ? "DOWOLNY"
+              : `${filters.maxStorageGb}GB`}
+          </label>
+          <input
+            id="maxStorage"
+            type="range"
+            min={1}
+            max={129}
+            step={1}
+            value={filters.maxStorageGb ?? 129}
+            onChange={(e) => {
+              const val = Number(e.target.value);
+              update({ maxStorageGb: val === 129 ? null : val });
+            }}
+            style={{ width: "100%", marginTop: "0.5rem" }}
+          />
+          <div className="flex justify-between text-xs mt-1">
+            <span>1GB</span>
+            <span>64GB</span>
+            <span>DOWOLNY</span>
+          </div>
+        </div>
       </div>
     </div>
   );

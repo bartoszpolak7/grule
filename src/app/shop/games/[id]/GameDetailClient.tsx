@@ -73,7 +73,6 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
                 width={320}
                 height={200}
                 className="w-full h-40 object-cover"
-                style={{ imageRendering: "pixelated" }}
               />
             </div>
           ) : (
@@ -82,8 +81,8 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
             </div>
           )}
 
-          <div className="space-y-3">
-            <p className="text-xs font-bold text-green-700 mb-3">
+          <div className="space-y-3 mb-6">
+            <p className="text-xs font-bold text-green-700">
               ${game.price.toFixed(2)}
             </p>
             <button
@@ -101,6 +100,38 @@ export default function GameDetailClient({ game }: Readonly<Props>) {
             >
               WSTECZ
             </button>
+          </div>
+
+          {/* Specyfikacja */}
+          <div className="nes-container is-rounded with-title">
+            <ul className="space-y-2 mt-2">
+              <li className="text-xs">
+                🖥 OS:{" "}
+                {game.rawgSpecs?.minOs ?? game.minOs ?? "Brak informacji"}
+              </li>
+              <li className="text-xs">
+                🧠 RAM:{" "}
+                {(game.rawgSpecs?.minRamGb ?? game.minRamGb)
+                  ? `${game.rawgSpecs?.minRamGb ?? game.minRamGb}GB minimum`
+                  : "Brak informacji"}
+              </li>
+              <li className="text-xs">
+                💾 Dysk:{" "}
+                {(game.rawgSpecs?.minStorageGb ?? game.minStorageGb)
+                  ? `${game.rawgSpecs?.minStorageGb ?? game.minStorageGb}GB`
+                  : "Brak informacji"}
+              </li>
+              <li className="text-xs">
+                🎮 GPU:{" "}
+                {game.rawgSpecs
+                  ? game.rawgSpecs.requiresGpu
+                    ? "Wymagana dedykowana karta graficzna"
+                    : "✅ Działa na zintegrowanej grafice"
+                  : game.requiresGpu
+                    ? "Wymagana dedykowana karta graficzna"
+                    : "✅ Działa na zintegrowanej grafice"}
+              </li>
+            </ul>
           </div>
         </aside>
       </div>

@@ -1,17 +1,15 @@
 "use client";
 import Link from "next/link";
-import { useCart } from "@/context/cart";
 import type { Game } from "@/generated/prisma/client";
 import { useEffect, useState } from "react";
 import PageWrapper from "@/components/PageWrapper";
+import GameCard from "@/components/GameCard";
 
 interface Props {
   deals: Game[];
 }
 
 export default function HomeClient({ deals }: Readonly<Props>) {
-  const { addItem, items } = useCart();
-
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -66,41 +64,9 @@ export default function HomeClient({ deals }: Readonly<Props>) {
         <p className="title">FEATURED DEALS</p>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {deals.map((game) => {
-            const inCart = mounted && items.some((i) => i.id === game.id);
-            return (
-              <article
-                key={game.id}
-                className="nes-container is-rounded bg-white"
-              >
-                <Link
-                  href={`/shop/games/${game.id}`}
-                  className="block hover:bg-yellow-100 p-3 transition"
-                >
-                  <h3 className="text-xs font-bold mb-2 text-black">
-                    {game.title}
-                  </h3>
-                  <p className="text-xs text-gray-700 mb-3">{game.genre}</p>
-                  <p className="text-xs font-bold mb-3 text-green-700">
-                    ${game.price.toFixed(2)}
-                  </p>
-                </Link>
-                <button
-                  onClick={() =>
-                    addItem({
-                      id: game.id,
-                      title: game.title,
-                      price: game.price,
-                    })
-                  }
-                  disabled={inCart}
-                  className={`nes-btn w-full text-xs ${inCart ? "is-disabled" : "is-success"}`}
-                >
-                  {inCart ? "IN CART" : "ADD TO CART"}
-                </button>
-              </article>
-            );
-          })}
+          {deals.map((game) => (
+            <GameCard key={game.id} game={game} mounted={mounted} />
+          ))}
         </div>
       </section>
     </PageWrapper>

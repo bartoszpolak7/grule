@@ -26,7 +26,7 @@ export const gamesRouter = router({
       if (!rawg) return game;
 
       // załaduj dane do bazy danych jeśli jeszcze ich tam nie ma
-      if (rawg.specs.minRamGb && !game.minRamGb) {
+      if (!game.minRamGb && !game.minStorageGb) {
         await prisma.game.update({
           where: { id: game.id },
           data: {
@@ -35,12 +35,14 @@ export const gamesRouter = router({
             requiresGpu: rawg.specs.requiresGpu,
             minOs: rawg.specs.minOs,
             imageUrl: rawg.imageUrl ?? game.imageUrl,
+            genre: rawg.genre ?? game.genre,
           },
         });
       }
 
       return {
         ...game,
+        genre: rawg.genre ?? game.genre,
         imageUrl: rawg.imageUrl ?? game.imageUrl,
         rawgRating: rawg.rating,
         rawgDescription: rawg.description,
